@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vue-paper-dashboard
+  namespace: lab3-agent
+  labels:
+    app: vue-paper-dashboard
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vue-paper-dashboard
+  template:
+    metadata:
+      labels:
+        app: vue-paper-dashboard
+    spec:
+      containers:
+        - name: vue-paper-dashboard
+          image: vue-paper-dashboard:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 1
+              memory: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vue-paper-dashboard
+  namespace: lab3-agent
+spec:
+  type: ClusterIP
+  selector:
+    app: vue-paper-dashboard
+  ports:
+    - port: 80
+      targetPort: 8080

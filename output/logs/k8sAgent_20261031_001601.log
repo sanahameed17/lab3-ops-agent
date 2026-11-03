@@ -1,0 +1,7 @@
+2026-10-31 00:16:01,272 | INFO | Log file: ./output/logs\k8sAgent_20261031_001601.log
+2026-10-31 00:16:01,272 | INFO | Trace file: ./output/logs\k8sAgent_20261031_001601_trace.log
+2026-10-31 00:16:02,270 | INFO | TASK: Deploy the existing Docker image vue-paper-dashboard:latest (the app listens on port 8080)
+to the Kubernetes cluster in namespace lab3-agent with 2 replicas.
+Expose it with a ClusterIP Service named vue-paper-dashboard on port 80.
+Wait until the Pods are Ready and verify that the Service returns the dashboard page.
+Save the manifest as k8s/vue-paper-dashboard.yaml.

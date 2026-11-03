@@ -1,0 +1,25 @@
+﻿# Secrets - never upload the API keys
+.env
+.env.*
+
+# Python / uv
+.venv/
+__pycache__/
+*.pyc
+.python-version.local
+
+# Test output of the tools
+output/test.txt
+output/missing.txt
+output/docker_test/
+
+# The application deployed by the agent: source is kept, build output and dependencies are not
+node_modules/
+dist/
+vue-paper-dashboard/.git_backup/
+
+# Editor / OS
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini

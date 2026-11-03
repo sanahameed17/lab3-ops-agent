@@ -1,0 +1,19 @@
+# Lab 2 CPU-stress RE-RUN (31 Oct 2026). Same stressor as the original Lab 2 run
+# (1 worker, load 50) but 3 minutes long, so the effect is visible in Prometheus.
+apiVersion: chaos-mesh.org/v1alpha1
+kind: StressChaos
+metadata:
+  name: bookinfo-cpu-stress-rerun
+  namespace: bookinfo
+spec:
+  mode: one
+  selector:
+    namespaces:
+      - bookinfo
+    labelSelectors:
+      app: productpage
+  stressors:
+    cpu:
+      workers: 1
+      load: 50
+  duration: "3m"

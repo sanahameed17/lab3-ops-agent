@@ -1,0 +1,14 @@
+# Lab 2 pod-kill RE-RUN (31 Oct 2026): kill one details pod once and measure recovery time.
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: bookinfo-pod-kill-rerun
+  namespace: bookinfo
+spec:
+  action: pod-kill
+  mode: one
+  selector:
+    namespaces:
+      - bookinfo
+    labelSelectors:
+      app: details

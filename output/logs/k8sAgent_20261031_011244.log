@@ -1,0 +1,28 @@
+2026-10-31 01:12:44,878 | INFO | Log file: ./output/logs\k8sAgent_20261031_011244.log
+2026-10-31 01:12:44,878 | INFO | Trace file: ./output/logs\k8sAgent_20261031_011244_trace.log
+2026-10-31 01:12:45,626 | INFO | TASK: Deploy the existing Docker image vue-paper-dashboard:latest (the app listens on port 8080)
+to the Kubernetes cluster in namespace lab3-agent with 2 replicas.
+Expose it with a ClusterIP Service named vue-paper-dashboard on port 80.
+Wait until the Pods are Ready and verify that the Service returns the dashboard page.
+Save the manifest as k8s/vue-paper-dashboard.yaml.
+2026-10-31 01:25:25,500 | INFO | FINISHED in 759.9 s
+2026-10-31 01:25:25,500 | INFO | FINAL ANSWER: Deployment complete and verified.
+
+**What was done**
+1. Created namespace `lab3-agent`.
+2. Generated and saved the manifest at `k8s/vue-paper-dashboard.yaml` containing:
+   - **Deployment** `vue-paper-dashboard`: 2 replicas, image `vue-paper-dashboard:latest`, `imagePullPolicy: IfNotPresent`, containerPort 8080, HTTP readiness probe on `/` : 8080, CPU/memory requests and limits.
+   - **Service** `vue-paper-dashboard`: type `ClusterIP`, port 80 → targetPort 8080, selector `app=vue-paper-dashboard`.
+3. Applied the manifest successfully (`deployment.apps/vue-paper-dashboard created`, `service/vue-paper-dashboard created`).
+4. Waited for rollout: `deployment "vue-paper-dashboard" successfully rolled out`.
+   - `vue-paper-dashboard-5cfb769f8c-42fpx` — 1/1 Running (node desktop-worker4)
+   - `vue-paper-dashboard-5cfb769f8c-6gt4s` — 1/1 Running (node desktop-worker)
+5. Verified the Service with an HTTP GET through a temporary port-forward.
+
+**Verification result**
+- VERDICT: **PASS** (ready endpoints = 2, HTTP status = 200)
+- Service: `vue-paper-dashboard` ClusterIP `10.96.37.99`, port 80/TCP, selector `app=vue-paper-dashboard`
+- Endpoints: `10.244.1.9 ready=true`, `10.244.2.9 ready=true`
+- Response body is the Vue Paper Dashboard HTML page, confirming the dashboard is served correctly.
+
+The application is running with 2 Ready replicas and is reachable through the ClusterIP Service on port 80.
